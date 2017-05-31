@@ -22,10 +22,20 @@ public class ProductController {
         }
 
         Product walmart = Client.requestWalmartResource(name);
-        log.warn(walmart.getProductName() + " " + walmart.getBestPrice());
+        if (walmart != null) {
+            log.warn(walmart.getProductName() + " " + walmart.getBestPrice());
+        }
+
 
         Product bestbuy = Client.requestBestBuyResource(name);
-        log.debug(bestbuy.getProductName() + " " + bestbuy.getBestPrice());
+        if (bestbuy != null) {
+            log.debug(bestbuy.getProductName() + " " + bestbuy.getBestPrice());
+        }
+
+        if (walmart == null && bestbuy == null) return null;
+
+        if (walmart == null && bestbuy != null) return bestbuy;
+        if (walmart != null && bestbuy == null) return walmart;
 
         return (bestbuy.getBestPrice() > walmart.getBestPrice()) ? walmart : bestbuy;
     }

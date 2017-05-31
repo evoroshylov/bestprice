@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
 /**
@@ -37,9 +39,14 @@ public class Client {
      * @param name contains search value
      * @return the URL with all parameters to obtain data from walmart
      */
-    public static String getWalmartBody(String name) {
+    public static String getWalmartBody(String name) throws UnsupportedEncodingException {
+        String temp = name;
         StringBuilder str = new StringBuilder();
-        str.append("http://api.walmartlabs.com/v1/search?query="+name+"&format=json&apiKey="+walmart_key+"&sort=price&order=asc&numItems=1");
+        if (temp != null) {
+            temp = URLEncoder.encode(temp, "UTF-8");
+            str.append("http://api.walmartlabs.com/v1/search?query=" + temp + "&format=json&apiKey=" + walmart_key + "&sort=price&order=asc&numItems=1");
+        }
+        log.info("resourceURL: '" + str.toString() + "'");
         return str.toString();
     };
 
@@ -47,10 +54,15 @@ public class Client {
      * @param name contains search value
      * @return the URL with all parameters to obtain data from Best Buy
      */
-    public static String getBestBuyBody(String name) {
+    public static String getBestBuyBody(String name) throws UnsupportedEncodingException {
+        String temp = name;
         StringBuilder str = new StringBuilder();
-        str.append("https://api.bestbuy.com/v1/products("+name+")");
-        str.append("?format=json&show=sku,name,salePrice&pageSize=1&sort=salesRankMediumTerm.asc&apiKey=" + bestbuy_key);
+        if (temp != null) {
+            temp = URLEncoder.encode(temp, "UTF-8");
+            str.append("https://api.bestbuy.com/v1/products(" + temp + ")");
+            str.append("?format=json&show=sku,name,salePrice&pageSize=1&sort=salesRankMediumTerm.asc&apiKey=" + bestbuy_key);
+        }
+        log.info("resourceURL: '" + str.toString() + "'");
         return str.toString();
     };
 
@@ -64,13 +76,13 @@ public class Client {
         HttpRequestBase request;
 
         String responseString = "";
-        request = new HttpGet(getWalmartBody(name));
-        log.info("resourceURL: '" + getWalmartBody(name) + "'");
-        request.addHeader("content-type", "application/json");
 
         HttpResponse response = null;
         int code = -1;
         try {
+            request = new HttpGet(getWalmartBody(name));
+            request.addHeader("content-type", "application/json");
+
             response = getHttpClient().execute(request);
             code = response.getStatusLine().getStatusCode();
             if (code >= 400) {
@@ -122,13 +134,13 @@ public class Client {
         HttpRequestBase request;
 
         String responseString = "";
-        log.info("resourceURL: '" +  getBestBuyBody(name) + "'");
-        request = new HttpGet(getBestBuyBody(name));
-        request.addHeader("content-type", "application/json");
 
         HttpResponse response = null;
         int code = -1;
         try {
+            request = new HttpGet(getBestBuyBody(name));
+            request.addHeader("content-type", "application/json");
+
             response = getHttpClient().execute(request);
             log.info(responseString);
             code = response.getStatusLine().getStatusCode();
