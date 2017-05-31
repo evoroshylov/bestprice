@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<Configure class="org.mortbay.jetty.webapp.WebAppContext">
+
+	<!-- Add an EnvEntry only valid for this webapp               -->
+<!--	<New id="gargle" class="org.mortbay.jetty.plus.naming.EnvEntry">
+		<Arg>gargle</Arg>
+		<Arg type="java.lang.Double">100</Arg>
+		<Arg type="boolean">true</Arg>
+	</New> -->
+
+<!--	<New id="ReportingDS" class="org.mortbay.jetty.plus.naming.Resource">
+		<Arg></Arg>
+		<Arg>jdbc/ReportingDS</Arg>
+		<Arg>
+			<New class="oracle.jdbc.pool.OracleConnectionPoolDataSource">
+				<Set name="URL">jdbc:oracle:thin:@localhost:1521:XE</Set>
+				<Set name="User">admin</Set>
+				<Set name="Password">admin</Set>
+			</New>
+		</Arg>
+	</New> -->
+
+<!-- 
+	<New id="mail" class="org.mortbay.jetty.plus.naming.Resource">
+		<Arg></Arg>
+		<Arg>mail/Session</Arg>
+		<Arg>
+			<New class="org.mortbay.naming.factories.MailSessionReference">
+				<Set name="user"></Set>
+				<Set name="password"></Set>
+				<Set name="properties">
+					<New class="java.util.Properties">
+						<Put name="mail.smtp.host">dev-test</Put>
+						<Put name="mail.from">evoroshylov@gmail.com</Put>
+						<Put name="mail.debug">true</Put>
+					</New>
+				</Set>
+			</New>
+		</Arg>
+	</New>
+ -->
+
+</Configure>
+
+
